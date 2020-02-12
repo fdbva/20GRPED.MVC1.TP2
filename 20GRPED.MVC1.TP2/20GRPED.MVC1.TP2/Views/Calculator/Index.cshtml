@@ -1,0 +1,89 @@
+﻿@model _20GRPED.MVC1.TP2.Models.CalculatorModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h4>CalculatorModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Left" class="control-label"></label>
+                <input asp-for="Left" class="form-control" />
+                <span asp-validation-for="Left" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Right" class="control-label"></label>
+                <input asp-for="Right" class="form-control" />
+                <span asp-validation-for="Right" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <form asp-action="Divide">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Left" class="control-label"></label>
+                <input asp-for="Left" class="form-control" />
+                <span asp-validation-for="Left" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Right" class="control-label"></label>
+                <input asp-for="Right" class="form-control" />
+                <span asp-validation-for="Right" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Divide" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <form asp-action="Subtract">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Left" class="control-label"></label>
+                <input asp-for="Left" class="form-control" />
+                <span asp-validation-for="Left" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Right" class="control-label"></label>
+                <input asp-for="Right" class="form-control" />
+                <span asp-validation-for="Right" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Subtract" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <form asp-action="Multiply">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Left" class="control-label"></label>
+                <input asp-for="Left" class="form-control" />
+                <span asp-validation-for="Left" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Right" class="control-label"></label>
+                <input asp-for="Right" class="form-control" />
+                <span asp-validation-for="Right" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Multiply" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
