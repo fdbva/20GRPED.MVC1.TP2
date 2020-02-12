@@ -11,11 +11,17 @@ namespace _20GRPED.MVC1.TP2.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Controller = nameof(CalculatorController);
+            ViewBag.Action = nameof(Index);
+
             return View();
         }
 
         public IActionResult Add(CalculatorModel calculatorModel)
         {
+            ViewBag.Controller = nameof(CalculatorController);
+            ViewBag.Action = nameof(Add);
+
             var result = calculatorModel.Left + calculatorModel.Right;
 
             calculatorModel.Result =
@@ -26,6 +32,9 @@ namespace _20GRPED.MVC1.TP2.Controllers
 
         public IActionResult Divide(CalculatorModel calculatorModel)
         {
+            ViewBag.Controller = nameof(CalculatorController);
+            ViewBag.Action = nameof(Divide);
+
             var result = calculatorModel.Left / calculatorModel.Right;
 
             calculatorModel.Result =
@@ -36,6 +45,9 @@ namespace _20GRPED.MVC1.TP2.Controllers
 
         public IActionResult Subtract(CalculatorModel calculatorModel)
         {
+            ViewBag.Controller = nameof(CalculatorController);
+            ViewBag.Action = nameof(Subtract);
+
             var result = calculatorModel.Left - calculatorModel.Right;
 
             calculatorModel.Result =
@@ -46,6 +58,9 @@ namespace _20GRPED.MVC1.TP2.Controllers
 
         public IActionResult Multiply(CalculatorModel calculatorModel)
         {
+            ViewBag.Controller = nameof(CalculatorController);
+            ViewBag.Action = nameof(Multiply);
+
             var result = calculatorModel.Left * calculatorModel.Right;
 
             calculatorModel.Result =

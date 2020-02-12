@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h2>@ViewBag.Controller.@ViewBag.Action</h2>
 
 <h4>CalculatorModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Add">
+        <form asp-controller="Addition" asp-action="Add">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Left" class="control-label"></label>
@@ -27,7 +27,7 @@
             </div>
         </form>
 
-        <form asp-action="Divide">
+        <form asp-controller="Division" asp-action="Divide">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Left" class="control-label"></label>
@@ -44,7 +44,7 @@
             </div>
         </form>
 
-        <form asp-action="Subtract">
+        <form asp-controller="Subtraction" asp-action="Subtract">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Left" class="control-label"></label>
@@ -61,7 +61,7 @@
             </div>
         </form>
 
-        <form asp-action="Multiply">
+        <form asp-controller="Multiplication" asp-action="Multiply">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Left" class="control-label"></label>
