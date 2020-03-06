@@ -1,0 +1,36 @@
+﻿@model _20GRPED.MVC1.TP2.Models.CalculatorModel
+
+@{
+    ViewData["Title"] = "Answer";
+}
+
+<h1>Answer</h1>
+
+<div>
+    <h4>CalculatorModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Left)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Left)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Right)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Right)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Result)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Result)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -9,12 +9,12 @@ namespace _20GRPED.MVC1.TP2.Controllers
 {
     public class AdditionController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Abacaxi()
         {
             ViewBag.Controller = nameof(AdditionController);
             ViewBag.Action = nameof(Index);
 
-            return View("Views/Calculator/Index.cshtml");
+            return View("Input");
         }
 
         public IActionResult Add(CalculatorModel calculatorModel)
@@ -27,7 +27,7 @@ namespace _20GRPED.MVC1.TP2.Controllers
             calculatorModel.Result =
                 $"{calculatorModel.Left} + {calculatorModel.Right} = {result}";
 
-            return View("Views/Calculator/Result.cshtml", calculatorModel);
+            return View("Answer", calculatorModel);
         }
     }
 }

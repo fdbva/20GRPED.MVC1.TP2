@@ -4,15 +4,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using _20GRPED.MVC1.TP2.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace _20GRPED.MVC1.TP2.Controllers
 {
     public class CalculatorController : Controller
     {
+        private readonly string _name;
+
+        public CalculatorController(
+            IConfiguration configuration)
+        {
+            _name = configuration.GetValue<string>("Nome");
+        }
+
         public IActionResult Index()
         {
             ViewBag.Controller = nameof(CalculatorController);
-            ViewBag.Action = nameof(Index);
+            ViewBag.Action = _name;
 
             return View();
         }

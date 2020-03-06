@@ -15,6 +15,8 @@ namespace _20GRPED.MVC1.TP2
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            var nome = configuration.GetValue<string>("Nome");
         }
 
         public IConfiguration Configuration { get; }
