@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Add">
+        <form id="calculatorForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Left" class="control-label"></label>
@@ -23,58 +23,10 @@
                 <span asp-validation-for="Right" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" />
-            </div>
-        </form>
-
-        <form asp-action="Divide">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Left" class="control-label"></label>
-                <input asp-for="Left" class="form-control" />
-                <span asp-validation-for="Left" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Right" class="control-label"></label>
-                <input asp-for="Right" class="form-control" />
-                <span asp-validation-for="Right" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Divide" class="btn btn-primary" />
-            </div>
-        </form>
-
-        <form asp-action="Subtract">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Left" class="control-label"></label>
-                <input asp-for="Left" class="form-control" />
-                <span asp-validation-for="Left" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Right" class="control-label"></label>
-                <input asp-for="Right" class="form-control" />
-                <span asp-validation-for="Right" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Subtract" class="btn btn-primary" />
-            </div>
-        </form>
-
-        <form asp-action="Multiply">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Left" class="control-label"></label>
-                <input asp-for="Left" class="form-control" />
-                <span asp-validation-for="Left" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Right" class="control-label"></label>
-                <input asp-for="Right" class="form-control" />
-                <span asp-validation-for="Right" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Multiply" class="btn btn-primary" />
+                <input type="submit" form="calculatorForm" asp-action="Add" value="+" class="btn btn-primary" />
+                <input type="submit" form="calculatorForm" asp-action="Divide" value="/" class="btn btn-primary" />
+                <input type="submit" form="calculatorForm" asp-action="Subtract" value="-" class="btn btn-primary" />
+                <input type="submit" form="calculatorForm" asp-action="Multiply" value="#" class="btn btn-primary" />
             </div>
         </form>
     </div>

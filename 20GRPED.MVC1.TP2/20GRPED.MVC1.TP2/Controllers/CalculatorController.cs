@@ -12,9 +12,10 @@ namespace _20GRPED.MVC1.TP2.Controllers
     {
         private readonly CalculatorHistoryRepository _calculatorHistoryRepository;
 
-        public CalculatorController()
+        public CalculatorController(
+            CalculatorHistoryRepository calculatorHistoryRepository)
         {
-            _calculatorHistoryRepository = new CalculatorHistoryRepository();
+            _calculatorHistoryRepository = calculatorHistoryRepository;
         }
 
         public IActionResult Index()

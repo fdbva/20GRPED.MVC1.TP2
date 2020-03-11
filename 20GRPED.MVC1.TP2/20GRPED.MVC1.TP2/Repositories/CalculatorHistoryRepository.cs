@@ -1,5 +1,6 @@
 ﻿using _20GRPED.MVC1.TP2.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,9 +11,10 @@ namespace _20GRPED.MVC1.TP2.Repositories
     {
         private readonly string _connectionString;
 
-        public CalculatorHistoryRepository()
+        public CalculatorHistoryRepository(
+            IConfiguration configuration)
         {
-            _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\felipe.andrade\source\repos\20GRPED.MVC1.CalculadoraLog\20GRPED.MVC1.TP2\20GRPED.MVC1.TP2\App_data\Calculadora.mdf;Integrated Security=True;Connect Timeout=30";
+            _connectionString = configuration.GetValue<string>("MdfConnectionString");
         }
 
         public void Insert(CalculatorModel calculator)
