@@ -4,11 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using _20GRPED.MVC1.TP2.Models;
+using _20GRPED.MVC1.TP2.Repositories;
 
 namespace _20GRPED.MVC1.TP2.Controllers
 {
     public class CalculatorController : Controller
     {
+        private readonly CalculatorHistoryRepository _calculatorHistoryRepository;
+
+        public CalculatorController()
+        {
+            _calculatorHistoryRepository = new CalculatorHistoryRepository();
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -18,8 +26,11 @@ namespace _20GRPED.MVC1.TP2.Controllers
         {
             var result = calculatorModel.Left + calculatorModel.Right;
 
+            calculatorModel.Operator = "+";
             calculatorModel.Result =
                 $"{calculatorModel.Left} + {calculatorModel.Right} = {result}";
+
+            _calculatorHistoryRepository.Insert(calculatorModel);
 
             return View("Result", calculatorModel);
         }
@@ -28,8 +39,11 @@ namespace _20GRPED.MVC1.TP2.Controllers
         {
             var result = calculatorModel.Left / calculatorModel.Right;
 
+            calculatorModel.Operator = "/";
             calculatorModel.Result =
                 $"{calculatorModel.Left} / {calculatorModel.Right} = {result}";
+
+            _calculatorHistoryRepository.Insert(calculatorModel);
 
             return View("Result", calculatorModel);
         }
@@ -38,8 +52,11 @@ namespace _20GRPED.MVC1.TP2.Controllers
         {
             var result = calculatorModel.Left - calculatorModel.Right;
 
+            calculatorModel.Operator = "-";
             calculatorModel.Result =
                 $"{calculatorModel.Left} - {calculatorModel.Right} = {result}";
+
+            _calculatorHistoryRepository.Insert(calculatorModel);
 
             return View("Result", calculatorModel);
         }
@@ -48,10 +65,21 @@ namespace _20GRPED.MVC1.TP2.Controllers
         {
             var result = calculatorModel.Left * calculatorModel.Right;
 
+            calculatorModel.Operator = "*";
             calculatorModel.Result =
                 $"{calculatorModel.Left} * {calculatorModel.Right} = {result}";
 
+            _calculatorHistoryRepository.Insert(calculatorModel);
+
             return View("Result", calculatorModel);
+        }
+
+        public IActionResult History()
+        {
+            IEnumerable<CalculatorModel> history
+                = _calculatorHistoryRepository.GetAll();
+
+            return View(history);
         }
     }
 }

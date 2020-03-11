@@ -2,6 +2,8 @@
 {
     public class CalculatorModel
     {
+        public int Id { get; set; }
+        public string Operator { get; set; }
         public decimal Left { get; set; }
         public decimal Right { get; set; }
         public string Result { get; set; }
