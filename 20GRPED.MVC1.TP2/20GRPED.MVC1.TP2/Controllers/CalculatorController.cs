@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using _20GRPED.MVC1.TP2.Models;
 using _20GRPED.MVC1.TP2.Repositories;
+using _20GRPED.MVC1.TP2.Constants;
 
 namespace _20GRPED.MVC1.TP2.Controllers
 {
@@ -18,18 +19,25 @@ namespace _20GRPED.MVC1.TP2.Controllers
             _calculatorHistoryRepository = calculatorHistoryRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string order)
         {
-            return View();
+            IEnumerable<CalculatorModel> history
+                = _calculatorHistoryRepository.GetAll();
+
+            var calculatorIndexViewModel = new CalculatorIndexViewModel
+            {
+                History = history
+            };
+            return View(calculatorIndexViewModel);
         }
 
         public IActionResult Add(CalculatorModel calculatorModel)
         {
             var result = calculatorModel.Left + calculatorModel.Right;
 
-            calculatorModel.Operator = "+";
+            calculatorModel.Operator = Operator.ADD_SIGN;
             calculatorModel.Result =
-                $"{calculatorModel.Left} + {calculatorModel.Right} = {result}";
+                $"{calculatorModel.Left} {Operator.ADD_SIGN} {calculatorModel.Right} = {result}";
 
             _calculatorHistoryRepository.Insert(calculatorModel);
 
@@ -40,9 +48,9 @@ namespace _20GRPED.MVC1.TP2.Controllers
         {
             var result = calculatorModel.Left / calculatorModel.Right;
 
-            calculatorModel.Operator = "/";
+            calculatorModel.Operator = Operator.DIVIDE_SIGN;
             calculatorModel.Result =
-                $"{calculatorModel.Left} / {calculatorModel.Right} = {result}";
+                $"{calculatorModel.Left} {Operator.DIVIDE_SIGN} {calculatorModel.Right} = {result}";
 
             _calculatorHistoryRepository.Insert(calculatorModel);
 
@@ -53,9 +61,9 @@ namespace _20GRPED.MVC1.TP2.Controllers
         {
             var result = calculatorModel.Left - calculatorModel.Right;
 
-            calculatorModel.Operator = "-";
+            calculatorModel.Operator = Operator.SUBTRACT_SIGN;
             calculatorModel.Result =
-                $"{calculatorModel.Left} - {calculatorModel.Right} = {result}";
+                $"{calculatorModel.Left} {Operator.SUBTRACT_SIGN} {calculatorModel.Right} = {result}";
 
             _calculatorHistoryRepository.Insert(calculatorModel);
 
@@ -66,9 +74,9 @@ namespace _20GRPED.MVC1.TP2.Controllers
         {
             var result = calculatorModel.Left * calculatorModel.Right;
 
-            calculatorModel.Operator = "*";
+            calculatorModel.Operator = Operator.MULTIPLY_SIGN;
             calculatorModel.Result =
-                $"{calculatorModel.Left} * {calculatorModel.Right} = {result}";
+                $"{calculatorModel.Left} {Operator.MULTIPLY_SIGN} {calculatorModel.Right} = {result}";
 
             _calculatorHistoryRepository.Insert(calculatorModel);
 

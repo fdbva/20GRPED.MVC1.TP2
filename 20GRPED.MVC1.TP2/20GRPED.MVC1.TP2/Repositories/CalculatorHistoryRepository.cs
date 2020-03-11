@@ -20,8 +20,8 @@ namespace _20GRPED.MVC1.TP2.Repositories
         public void Insert(CalculatorModel calculator)
         {
             var cmdText = "INSERT INTO CalculatorHistory" +
-                "		(Operator, LeftNumber, RightNumber, Result)" +
-                "VALUES	(@operator, @leftNumber, @rightNumber, @result);";
+                "		(Operator, LeftNumber, RightNumber, Result, Hora)" +
+                "VALUES	(@operator, @leftNumber, @rightNumber, @result, @hora);";
 
             using (var sqlConnection = new SqlConnection(_connectionString)) //já faz o close e dispose
             using (var sqlCommand = new SqlCommand(cmdText, sqlConnection)) //já faz o close
@@ -36,6 +36,8 @@ namespace _20GRPED.MVC1.TP2.Repositories
                     .Add("@rightNumber", SqlDbType.Decimal).Value = calculator.Right;
                 sqlCommand.Parameters
                     .Add("@result", SqlDbType.VarChar).Value = calculator.Result;
+                sqlCommand.Parameters
+                    .Add("@hora", SqlDbType.DateTime).Value = DateTime.Now;
 
                 sqlConnection.Open();
 
@@ -45,8 +47,14 @@ namespace _20GRPED.MVC1.TP2.Repositories
 
         public IEnumerable<CalculatorModel> GetAll()
         {
-            var cmdText = $"SELECT Id, Operator, LeftNumber, RightNumber, Result " +
-                $"FROM CalculatorHistory";
+            var cmdText = $"SELECT " +
+                $"Id as '{nameof(CalculatorModel.Id)}', " +
+                $"Operator as '{nameof(CalculatorModel.Operator)}', " +
+                $"LeftNumber as '{nameof(CalculatorModel.Left)}', " +
+                $"RightNumber as '{nameof(CalculatorModel.Right)}', " +
+                $"Result as '{nameof(CalculatorModel.Result)}', " +
+                $"Hora as '{nameof(CalculatorModel.Hora)}' " +
+                $"FROM CalculatorHistory ORDER BY Hora DESC";
 
             var history = new List<CalculatorModel>();
 
@@ -59,11 +67,12 @@ namespace _20GRPED.MVC1.TP2.Repositories
 
                 using (var reader = sqlCommand.ExecuteReader())
                 {
-                    var idColumnIndex = reader.GetOrdinal("ID");
-                    var operatorColumnIndex = reader.GetOrdinal("Operator");
-                    var leftNumberColumnIndex = reader.GetOrdinal("LeftNumber");
-                    var rightNumberColumnIndex = reader.GetOrdinal("RightNumber");
-                    var resultColumnIndex = reader.GetOrdinal("Result");
+                    var idColumnIndex = reader.GetOrdinal(nameof(CalculatorModel.Id));
+                    var operatorColumnIndex = reader.GetOrdinal(nameof(CalculatorModel.Operator));
+                    var leftNumberColumnIndex = reader.GetOrdinal(nameof(CalculatorModel.Left));
+                    var rightNumberColumnIndex = reader.GetOrdinal(nameof(CalculatorModel.Right));
+                    var resultColumnIndex = reader.GetOrdinal(nameof(CalculatorModel.Result));
+                    var horaColumnIndex = reader.GetOrdinal(nameof(CalculatorModel.Hora));
                     while (reader.Read())
                     {
                         var id = reader.GetFieldValue<int>(idColumnIndex);
@@ -71,6 +80,7 @@ namespace _20GRPED.MVC1.TP2.Repositories
                         var left = reader.GetFieldValue<decimal>(leftNumberColumnIndex);
                         var right = reader.GetFieldValue<decimal>(rightNumberColumnIndex);
                         var result = reader.GetFieldValue<string>(resultColumnIndex);
+                        var hora = reader.GetFieldValue<DateTime>(horaColumnIndex);
 
                         var entry = new CalculatorModel
                         {
@@ -78,7 +88,8 @@ namespace _20GRPED.MVC1.TP2.Repositories
                             Operator = @operator,
                             Left = left,
                             Right = right,
-                            Result = result
+                            Result = result,
+                            Hora = hora
                         };
                         history.Add(entry);
                     }
