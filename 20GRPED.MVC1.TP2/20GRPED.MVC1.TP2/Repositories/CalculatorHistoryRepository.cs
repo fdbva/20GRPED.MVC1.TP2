@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace _20GRPED.MVC1.TP2.Repositories
 {
@@ -45,7 +46,7 @@ namespace _20GRPED.MVC1.TP2.Repositories
             }
         }
 
-        public IEnumerable<CalculatorModel> GetAll()
+        public IEnumerable<CalculatorModel> GetAll(string filter = null)
         {
             var cmdText = $"SELECT " +
                 $"Id as '{nameof(CalculatorModel.Id)}', " +
@@ -54,7 +55,14 @@ namespace _20GRPED.MVC1.TP2.Repositories
                 $"RightNumber as '{nameof(CalculatorModel.Right)}', " +
                 $"Result as '{nameof(CalculatorModel.Result)}', " +
                 $"Hora as '{nameof(CalculatorModel.Hora)}' " +
-                $"FROM CalculatorHistory ORDER BY Hora DESC";
+                $"FROM CalculatorHistory ";
+
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                cmdText += $"{Environment.NewLine}{filter}";
+            }
+
+            cmdText += $"{Environment.NewLine}ORDER BY Hora DESC";
 
             var history = new List<CalculatorModel>();
 
@@ -97,6 +105,65 @@ namespace _20GRPED.MVC1.TP2.Repositories
             }
 
             return history;
+        }
+
+        public void Update(CalculatorModel updatedCalculatorModel)
+        {
+            var cmdText = "UPDATE CalculatorHistory" +
+                "SET	" +
+                    "Operator = @operator, " +
+                    "LeftNumber = @leftNumber, " +
+                    "RightNumber = @rightNumber, " +
+                    "Result = @result, " +
+                    "Hora = @hora);" +
+                "WHERE Id = @id";
+
+            using (var sqlConnection = new SqlConnection(_connectionString)) //já faz o close e dispose
+            using (var sqlCommand = new SqlCommand(cmdText, sqlConnection)) //já faz o close
+            {
+                sqlCommand.CommandType = CommandType.Text;
+
+                sqlCommand.Parameters
+                    .Add("@operator", SqlDbType.VarChar).Value = updatedCalculatorModel.Operator;
+                sqlCommand.Parameters
+                    .Add("@leftNumber", SqlDbType.Decimal).Value = updatedCalculatorModel.Left;
+                sqlCommand.Parameters
+                    .Add("@rightNumber", SqlDbType.Decimal).Value = updatedCalculatorModel.Right;
+                sqlCommand.Parameters
+                    .Add("@result", SqlDbType.VarChar).Value = updatedCalculatorModel.Result;
+                sqlCommand.Parameters
+                    .Add("@hora", SqlDbType.DateTime).Value = DateTime.Now;
+                sqlCommand.Parameters
+                    .Add("@id", SqlDbType.Int).Value = updatedCalculatorModel.Id;
+
+                sqlConnection.Open();
+
+                var resutScalar = sqlCommand.ExecuteScalar();
+            }
+        }
+
+        public CalculatorModel GetById(int idInput)
+        {
+            return GetAll($"WHERE Id = {idInput}").FirstOrDefault();
+        }
+
+        public void Remove(int id)
+        {
+            var cmdText = "DELETE FROM CalculatorHistory" +
+                "WHERE Id = @id";
+
+            using (var sqlConnection = new SqlConnection(_connectionString)) //já faz o close e dispose
+            using (var sqlCommand = new SqlCommand(cmdText, sqlConnection)) //já faz o close
+            {
+                sqlCommand.CommandType = CommandType.Text;
+
+                sqlCommand.Parameters
+                    .Add("@id", SqlDbType.Int).Value = id;
+
+                sqlConnection.Open();
+
+                var resutScalar = sqlCommand.ExecuteScalar();
+            }
         }
     }
 }

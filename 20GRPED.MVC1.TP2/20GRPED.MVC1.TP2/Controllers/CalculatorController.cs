@@ -83,12 +83,71 @@ namespace _20GRPED.MVC1.TP2.Controllers
             return View("Result", calculatorModel);
         }
 
+        // GET: Product/Details/5
+        public ActionResult Details(int id)
+        {
+            var calculatorModel = _calculatorHistoryRepository.GetById(id);
+
+            return View("Result", calculatorModel);
+        }
+
         public IActionResult History()
         {
             IEnumerable<CalculatorModel> history
                 = _calculatorHistoryRepository.GetAll();
 
             return View(history);
+        }
+
+
+        // GET: Calculator/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var calculator = _calculatorHistoryRepository.GetById(id);
+            return View(calculator);
+        }
+
+        // POST: Product/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(CalculatorModel updatedCalculatorModel)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                _calculatorHistoryRepository.Update(updatedCalculatorModel);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Calculator/Delete/5
+        public ActionResult Delete(int id)
+        {
+            var calculator = _calculatorHistoryRepository.GetById(id);
+            return View(calculator);
+        }
+
+        // POST: Calculator/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(CalculatorModel calculatorModel)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                _calculatorHistoryRepository.Remove(calculatorModel.Id);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }
