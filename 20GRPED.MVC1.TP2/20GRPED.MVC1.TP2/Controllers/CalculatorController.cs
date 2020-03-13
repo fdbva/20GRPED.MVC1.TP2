@@ -91,10 +91,11 @@ namespace _20GRPED.MVC1.TP2.Controllers
             return View("Result", calculatorModel);
         }
 
-        public IActionResult History()
+        public IActionResult History(string @operator)
         {
             IEnumerable<CalculatorModel> history
-                = _calculatorHistoryRepository.GetAll();
+                = _calculatorHistoryRepository
+                    .GetAllOfThisOperator(@operator);
 
             return View(history);
         }
